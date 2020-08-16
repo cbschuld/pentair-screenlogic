@@ -1,0 +1,19 @@
+#!/usr/bin/node
+// Send command to set the state of a circuit.
+ 
+const ScreenLogic = require('./index');
+
+var myArgs = process.argv.slice(2);
+var screenLogic_ip = process.env.SCREENLOGICIP;
+
+connect(new ScreenLogic.UnitConnection(80, screenLogic_ip), parseInt(myArgs[0]), parseInt(myArgs[1]));
+
+function connect(client, circuit, onoff) {
+  client.on('loggedIn', function() {
+    this.setCircuitState(0, circuit, onoff);
+    client.close();
+  });
+
+  client.connect();
+}
+

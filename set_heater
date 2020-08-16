@@ -1,0 +1,23 @@
+#!/usr/bin/node
+// Send command to change state of Pool or Spa heater. Note: THIS WILL ALSO TURN POOL OR SPA ON.
+
+const ScreenLogic = require('./index');
+
+var myArgs = process.argv.slice(2);
+var screenLogic_ip = process.env.SCREENLOGICIP;
+
+connect(new ScreenLogic.UnitConnection(80, screenLogic_ip), parseInt(myArgs[0]), parseInt(myArgs[1]));
+
+function connect(client, heater, onoff) {
+  client.on('loggedIn', function() {
+// Turn Heater for Pool or Spa on or Off.
+  if (onoff == 1) {
+    this.setHeatMode(0, heater, 3);
+  }else if (onoff ==0) {
+    this.setHeatMode(0, heater, 0);
+  }
+    client.close();
+  });
+
+  client.connect();
+}
