@@ -33,3 +33,21 @@ This container's work is hugely influenced by [Brian Woodworth's](https://github
 The guts of this decorator is provided by the great work of [Chris Pickett's](https://www.parnic.com/) [node-screenlogic](https://github.com/parnic/node-screenlogic).
 
 A huge thanks to these folks for simplifying the automation of the Pentair system.
+
+
+
+
+
+### Internal Notes
+
+build and push
+```shell
+docker build --tag cbschuld/pentair-screenlogic:latest .
+docker build --tag cbschuld/pentair-screenlogic:1.1 .
+docker push cbschuld/pentair-screenlogic
+```
+
+local testing
+```shell
+docker run --name=pentair -e "MQTTIP=10.10.1.50" -e "SCREENLOGICIP=10.10.1.81" cbschuld/pentair-screenlogic:latest
+```
